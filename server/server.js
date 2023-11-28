@@ -23,6 +23,22 @@ const setupServer = () => {
   const USER_DATA_TABLE = 'user_data';
   const CHILDREN_DATA_TABLE = 'children_data';
 
+  const columnsArray = [
+    'user_firstName',
+    'user_lastName',
+    'data_id',
+    'children_data.user_id',
+    'temp',
+    'defecation',
+    'eat',
+    'date',
+    'medicine_morning',
+    'medicine_afternoon',
+    'medicine_night',
+    'condition',
+  ];
+
+  //GET--------------------------------------------------
   app.get('/api/v1/historise/:username', async (req, res) => {
     //usernameはfirstName+ 半角スペース+ lastNameを想定
     const userNamearray = req.params.username.split(' ');
@@ -33,7 +49,7 @@ const setupServer = () => {
           user_firstName: userNamearray[0],
           user_lastName: userNamearray[1],
         })
-        .select()
+        .select(columnsArray)
         .from(USER_DATA_TABLE)
         .innerJoin(
           CHILDREN_DATA_TABLE,
@@ -64,19 +80,46 @@ const setupServer = () => {
     }
   });
 
-  //   knex
-  //   .from('users')
-  //   .innerJoin('accounts', 'users.id', 'accounts.user_id')
+  //POST-------------------------------
+  app.post('/api/v1/historise/:username', async (req, res) => {
+    try {
+      const userNamearray = req.params.username.split(' ');
+      const userId = await knex
+        .where({
+          user_firstName: userNamearray[0],
+          user_lastName: userNamearray[1],
+        })
+        .select('user_id')
+        .from(USER_DATA_TABLE);
+      req.body.user_id = userId[0].user_id;
+      req.body.data_id = 9;
 
-  //   app.put('/api', async (req, res) => {
-  //     try {
-  //       console.log('PUTリクエスト');
-  //       await knex(WORK_TABLE).insert(req.body);
-  //       await res.status(200).end();
-  //     } catch (err) {
-  //       res.status(404).send(err);
-  //     }
-  //   });
+      await knex(CHILDREN_DATA_TABLE).insert(req.body);
+      const dataId = await knex(CHILDREN_DATA_TABLE)
+        .select('data_id')
+        .orderBy('data_id', 'desc')
+        .first();
+      await res.status(200).send(dataId);
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  });
+
+  //PUT-------------------------------
+  app.put('/api/v1/historise/:id', async (req, res) => {
+    try {
+      console.log('@@@@@@@@@@@@id', req.params.id);
+      console.log('@@@@@@@@@@@@body', req.body);
+      await knex(CHILDREN_DATA_TABLE)
+        .where({ user_id: req.params.id })
+        .update(req.body);
+
+      // console.log('@@@@@@@@', dataId);
+      await res.status(200).send('修正完了しました');
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  });
 
   return app;
 };
