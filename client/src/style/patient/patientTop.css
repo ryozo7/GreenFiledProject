@@ -1,0 +1,19 @@
+.wrap {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 300px;
+}
+
+/* .content1 {
+  flex: 50%;
+}
+
+.content2 {
+  flex: 50%;
+} */
+.patient__header {
+  height: 15vh;
+  background-color: gray;
+  text-align: center;
+}
