@@ -23,14 +23,50 @@ const setupServer = () => {
   const USER_DATA_TABLE = 'user_data';
   const CHILDREN_DATA_TABLE = 'children_data';
 
-  app.get('/api', async (req, res) => {
+  app.get('/api/v1/historise/:username', async (req, res) => {
+    //usernameはfirstName+ 半角スペース+ lastNameを想定
+    const userNamearray = req.params.username.split(' ');
+    console.log('@@@@@@@@@userNamearray', userNamearray);
     try {
-      const Samaple = await knex.select().from(USER_DATA_TABLE);
-      await res.status(200).send(Samaple);
+      const getUsers = await knex
+        .where({
+          user_firstName: userNamearray[0],
+          user_lastName: userNamearray[1],
+        })
+        .select()
+        .from(USER_DATA_TABLE)
+        .innerJoin(
+          CHILDREN_DATA_TABLE,
+          'user_data.user_id',
+          'children_data.user_id'
+        )
+        .limit(20);
+      await res.status(200).send(getUsers);
     } catch (err) {
       res.status(404).send(err);
     }
   });
+
+  app.get('/api/v1/historise', async (req, res) => {
+    try {
+      const getAll = await knex
+        .select()
+        .from(USER_DATA_TABLE)
+        .innerJoin(
+          CHILDREN_DATA_TABLE,
+          'user_data.user_id',
+          'children_data.user_id'
+        )
+        .limit(20);
+      await res.status(200).send(getAll);
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  });
+
+  //   knex
+  //   .from('users')
+  //   .innerJoin('accounts', 'users.id', 'accounts.user_id')
 
   //   app.put('/api', async (req, res) => {
   //     try {
