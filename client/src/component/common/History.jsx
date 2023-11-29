@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom'
 
 const History = (props) => {
-  const {histories,setEditId} = props;
+  const {histories,setEditId,setIsCreate,setCurrentData} = props;
   const navigate = useNavigate()
   const changeTime = (num) => {
     if(num === 0) return "朝"
@@ -40,9 +40,27 @@ const History = (props) => {
   })
   const getDataId = (id) => {
     console.log("id : ",id)
+    setIsCreate(false)
     setEditId(id)
+    const arrayIndex = histories.findIndex(elem => elem.data_id === id)
+    const tmpData = {
+      inputDate : histories[arrayIndex].date,
+      isMorning : histories[arrayIndex].medicine_morning,
+      isAfternoon : histories[arrayIndex].medicine_afternoon,
+      isEvening : histories[arrayIndex].medicine_night,
+      temp :histories[arrayIndex].temp,
+      defecation :histories[arrayIndex].defecation,
+      eat :histories[arrayIndex].eat,
+      isMedicine :histories[arrayIndex].medicine_morning || histories[arrayIndex].medicine_afternoon || histories[arrayIndex].medicine_night,
+      condition : histories[arrayIndex].condition,
+    }
+    setCurrentData(tmpData)
     navigate("/patient/modifyhistory")
 
+  }
+  const createHandler = () => {
+    setIsCreate(true)
+    navigate("/patient/newhistory")
   }
 
   
@@ -50,7 +68,7 @@ const History = (props) => {
     <div>
       <div className='common__histories--wrap'>
         <div className='common__histories--btn'>
-          <button>+ 新規登録</button>
+          <button onClick={createHandler}>+ 新規登録</button>
         </div>
         <div className='common__histories--btn'>
           <button>処方箋登録</button>

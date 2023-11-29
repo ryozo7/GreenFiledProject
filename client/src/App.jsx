@@ -19,6 +19,10 @@ function App() {
   const [roll,setRoll] = useState(userInfo.roll)
   const [histories,setHistories] = useState(historiesTest)
   const [editId,setEditId] = useState()
+  const [isCreate,setIsCreate] = useState(true)
+  const [currentData,setCurrentData] = useState({})
+
+  
   
 
 
@@ -34,9 +38,9 @@ function App() {
         <Route path="/auth/signup" element={<SignUp />} />
       </Route>
       <Route path="/patient" element={<Header />}>
-        <Route path="/patient/histories" element={<History histories={histories} setEditId={setEditId}/>} />
-        <Route path="/patient/newhistory" element={<InputPatient username={username} setHistories={setHistories}/>} />
-        <Route path="/patient/modifyhistory" element={<InputPatient editId={editId} setHistories={setHistories}/>} />
+        <Route path="/patient/histories" element={<History histories={histories} setEditId={setEditId} setIsCreate={setIsCreate} setCurrentData={setCurrentData} />} />
+        <Route path="/patient/newhistory" element={<InputPatient username={username} setHistories={setHistories} isCreate={isCreate} histories={histories} currentData={currentData} />} />
+        <Route path="/patient/modifyhistory" element={<InputPatient username={username} editId={editId} setHistories={setHistories} isCreate={isCreate} histories={histories} currentData={currentData} />} />
       </Route>
       <Route path="/doctor" element={<Header />}>
         <Route path="/doctor/histories" element={<History  histories={histories} />} />

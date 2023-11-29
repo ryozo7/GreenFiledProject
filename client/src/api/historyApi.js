@@ -10,6 +10,8 @@ const historyApi = {
       sendData
     ),
   deleteHistory: (dataId) => axiosClient.delete(`histories/${dataId}`),
+  updateHistory: (dataId, sendData) =>
+    axiosClient.put(`histories/${dataId}`, sendData),
 };
 
 export default historyApi;
