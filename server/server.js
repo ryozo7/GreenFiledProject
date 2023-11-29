@@ -91,11 +91,16 @@ const setupServer = () => {
         })
         .select('user_id')
         .from(USER_DATA_TABLE);
+
+      let dataId = await knex(CHILDREN_DATA_TABLE)
+        .select('data_id')
+        .orderBy('data_id', 'desc')
+        .first();
       req.body.user_id = userId[0].user_id;
-      req.body.data_id = 9;
+      req.body.data_id = dataId.data_id + 1;
 
       await knex(CHILDREN_DATA_TABLE).insert(req.body);
-      const dataId = await knex(CHILDREN_DATA_TABLE)
+      dataId = await knex(CHILDREN_DATA_TABLE)
         .select('data_id')
         .orderBy('data_id', 'desc')
         .first();
@@ -108,13 +113,10 @@ const setupServer = () => {
   //PUT-------------------------------
   app.put('/api/v1/historise/:id', async (req, res) => {
     try {
-      console.log('@@@@@@@@@@@@id', req.params.id);
-      console.log('@@@@@@@@@@@@body', req.body);
       await knex(CHILDREN_DATA_TABLE)
         .where({ user_id: req.params.id })
         .update(req.body);
 
-      // console.log('@@@@@@@@', dataId);
       await res.status(200).send('修正完了しました');
     } catch (err) {
       res.status(404).send(err);
