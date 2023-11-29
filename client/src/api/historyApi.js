@@ -9,6 +9,7 @@ const historyApi = {
       `histories/${username}`,
       sendData
     ),
+  deleteHistory: (dataId) => axiosClient.delete(`histories/${dataId}`),
 };
 
 export default historyApi;

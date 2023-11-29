@@ -1,9 +1,11 @@
 import React from 'react'
 import "../../style/common/common.css"
 import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom'
 
 const History = (props) => {
-  const {histories} = props;
+  const {histories,setEditId} = props;
+  const navigate = useNavigate()
   const changeTime = (num) => {
     if(num === 0) return "朝"
     if(num === 1) return "昼"
@@ -36,6 +38,12 @@ const History = (props) => {
     tableData.condition = elem.condition
     return tableData
   })
+  const getDataId = (id) => {
+    console.log("id : ",id)
+    setEditId(id)
+    navigate("/patient/modifyhistory")
+
+  }
 
   
   return (
@@ -52,6 +60,7 @@ const History = (props) => {
       <table border="1">
       <tbody>
         <tr>
+          <th width = "100">ID </th>
           <th width = "100">日付</th>
           <th width = "100">名前</th>
           <th width = "100">体温[℃]</th>
@@ -64,6 +73,7 @@ const History = (props) => {
         {changedHistories.map((elem) => {
           return (
             <tr key={elem.data_id} className='common__histories--table'>
+              <td>{elem.data_id}</td>
               <td>{elem.date}</td>
               <td>{elem.name}</td>
               <td>{elem.temp}</td>
@@ -71,7 +81,7 @@ const History = (props) => {
               <td>{elem.eat}</td>
               <td>{elem.medicine}</td>
               <td style={{textAlign: "left"}}>{elem.condition}</td>
-              <td><EditIcon /></td>
+              <td><EditIcon onClick={()=>{getDataId(elem.data_id)}}/></td>
             </tr>
           )
         })}

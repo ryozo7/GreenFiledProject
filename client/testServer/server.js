@@ -191,6 +191,12 @@ app.post("/api/v1/histories/:username", (req, res) => {
   res.send("新規投稿です。");
 });
 
+app.delete("/api/v1/histories/:id", (req, res) => {
+  console.log("data_id : ", req.params.id);
+
+  res.send("削除できました。");
+});
+
 app.listen(PORT, () => {
   console.log("server is runnig");
 });
