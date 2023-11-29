@@ -29,6 +29,7 @@ const setupServer = () => {
     'data_id',
     'children_data.user_id',
     'temp',
+    'time',
     'defecation',
     'eat',
     'date',
