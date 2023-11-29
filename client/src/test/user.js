@@ -1,5 +1,5 @@
 export const userInfo = {
   username: "tanaka taro",
-  roll: true,
+  roll: false,
   image: "rowValue1fafasgfdhsdfhsh",
 };

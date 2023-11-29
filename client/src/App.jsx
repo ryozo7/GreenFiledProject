@@ -18,6 +18,7 @@ function App() {
   const [image,setImage] = useState(userInfo.image)
   const [roll,setRoll] = useState(userInfo.roll)
   const [histories,setHistories] = useState(historiesTest)
+  const [editId,setEditId] = useState()
   
 
 
@@ -33,9 +34,9 @@ function App() {
         <Route path="/auth/signup" element={<SignUp />} />
       </Route>
       <Route path="/patient" element={<Header />}>
-        <Route path="/patient/histories" element={<History histories={histories} />} />
-        <Route path="/patient/newhistory" element={<InputPatient username={username}/>} />
-        <Route path="/patient/modifyhistory" element={<InputPatient />} />
+        <Route path="/patient/histories" element={<History histories={histories} setEditId={setEditId}/>} />
+        <Route path="/patient/newhistory" element={<InputPatient username={username} setHistories={setHistories}/>} />
+        <Route path="/patient/modifyhistory" element={<InputPatient editId={editId} setHistories={setHistories}/>} />
       </Route>
       <Route path="/doctor" element={<Header />}>
         <Route path="/doctor/histories" element={<History  histories={histories} />} />

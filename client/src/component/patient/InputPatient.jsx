@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import historyApi from '../../api/historyApi'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const InputPatient = (props) => {
-  const {username} = props
+  const {username,editId, setHistories} = props
   const navigate = useNavigate()
+
+
 
   //state
   const [inputDate, setInputDate]=useState()
@@ -110,7 +113,18 @@ const InputPatient = (props) => {
 
   const cancelClickHandler = () => {
     ///patient/historiesへ戻る
+
     navigate("/patient/histories")
+  }
+  const deleteClickHandler = async()=>{
+    try{
+      const response = await historyApi.deleteHistory(editId)
+      try{
+        const getByUserHistory = await historyApi.getByUser(username)
+        await setHistories(getByUserHistory)
+        navigate("/patient/histories")
+      }catch(err){console.error(`err : ${err}`)}
+    }catch(err){console.error(`err : ${err}`)}
   }
 
   return (
@@ -167,6 +181,7 @@ const InputPatient = (props) => {
       </div>
       <button onClick={postClickHandler}>登録</button>
       <button onClick={cancelClickHandler}>キャンセル</button>
+      <DeleteIcon onClick={deleteClickHandler}/>
     </div>
   )
 }
