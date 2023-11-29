@@ -40,7 +40,7 @@ const setupServer = () => {
   ];
 
   //GET--------------------------------------------------
-  app.get('/api/v1/historise/:username', async (req, res) => {
+  app.get('/api/v1/histories/:username', async (req, res) => {
     //usernameはfirstName+ 半角スペース+ lastNameを想定
     const userNamearray = req.params.username.split(' ');
     try {
@@ -67,7 +67,7 @@ const setupServer = () => {
     }
   });
 
-  app.get('/api/v1/historise', async (req, res) => {
+  app.get('/api/v1/histories', async (req, res) => {
     try {
       const getAll = await knex
         .select(columnsArray)
@@ -90,7 +90,7 @@ const setupServer = () => {
   });
 
   //POST-------------------------------
-  app.post('/api/v1/historise/:username', async (req, res) => {
+  app.post('/api/v1/histories/:username', async (req, res) => {
     try {
       const userNamearray = req.params.username.split(' ');
       const userId = await knex
@@ -120,7 +120,7 @@ const setupServer = () => {
   });
 
   //PUT-------------------------------
-  app.put('/api/v1/historise/:id', async (req, res) => {
+  app.put('/api/v1/histories/:id', async (req, res) => {
     try {
       await knex(CHILDREN_DATA_TABLE)
         .where({ data_id: req.params.id })
@@ -133,7 +133,7 @@ const setupServer = () => {
   });
 
   //DELETE-------------------------------
-  app.delete('/api/v1/historise/:id', async (req, res) => {
+  app.delete('/api/v1/histories/:id', async (req, res) => {
     try {
       await knex(CHILDREN_DATA_TABLE)
         .where({ data_id: req.params.id })
