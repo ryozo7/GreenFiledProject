@@ -42,7 +42,7 @@ exports.seed = async function (knex) {
       user_id: 4,
       password: 'abcdef',
       user_firstName: 'taro',
-      user_lastName: 'oga',
+      user_lastName: 'tanaka',
       solt: 'ccc12',
       roll: true,
       image: 'rowValue1fafasgfdhsdfhsh',
