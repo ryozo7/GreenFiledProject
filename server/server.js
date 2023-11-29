@@ -43,7 +43,6 @@ const setupServer = () => {
   app.get('/api/v1/historise/:username', async (req, res) => {
     //usernameはfirstName+ 半角スペース+ lastNameを想定
     const userNamearray = req.params.username.split(' ');
-    console.log('@@@@@@@@@userNamearray', userNamearray);
     try {
       const getUsers = await knex
         .where({
@@ -57,6 +56,10 @@ const setupServer = () => {
           'user_data.user_id',
           'children_data.user_id'
         )
+        .orderBy([
+          { column: 'date', order: 'desc' },
+          { column: 'time', order: 'desc' },
+        ])
         .limit(20);
       await res.status(200).send(getUsers);
     } catch (err) {
@@ -74,7 +77,12 @@ const setupServer = () => {
           'user_data.user_id',
           'children_data.user_id'
         )
+        .orderBy([
+          { column: 'date', order: 'desc' },
+          { column: 'time', order: 'desc' },
+        ])
         .limit(20);
+
       await res.status(200).send(getAll);
     } catch (err) {
       res.status(404).send(err);
@@ -118,7 +126,7 @@ const setupServer = () => {
         .where({ data_id: req.params.id })
         .update(req.body);
 
-      await res.status(200).send('修正完了しました');
+      await res.status(200).send(`{ message: '修正完了しました' }`);
     } catch (err) {
       res.status(404).send(err);
     }
@@ -131,7 +139,7 @@ const setupServer = () => {
         .where({ data_id: req.params.id })
         .delete();
 
-      await res.status(200).send('削除完了しました');
+      await res.status(200).send('{message: "削除完了しました"}');
     } catch (err) {
       res.status(404).send(err);
     }
