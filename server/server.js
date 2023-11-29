@@ -86,8 +86,8 @@ const setupServer = () => {
       const userNamearray = req.params.username.split(' ');
       const userId = await knex
         .where({
-          user_firstName: userNamearray[0],
-          user_lastName: userNamearray[1],
+          user_firstName: userNamearray[1],
+          user_lastName: userNamearray[0],
         })
         .select('user_id')
         .from(USER_DATA_TABLE);
@@ -118,6 +118,19 @@ const setupServer = () => {
         .update(req.body);
 
       await res.status(200).send('修正完了しました');
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  });
+
+  //DELETE-------------------------------
+  app.delete('/api/v1/historise/:id', async (req, res) => {
+    try {
+      await knex(CHILDREN_DATA_TABLE)
+        .where({ data_id: req.params.id })
+        .delete();
+
+      await res.status(200).send('削除完了しました');
     } catch (err) {
       res.status(404).send(err);
     }
