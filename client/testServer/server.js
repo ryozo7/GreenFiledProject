@@ -36,7 +36,7 @@ const testHistories = [
     defecation: "便なし",
     eat: "食欲あり",
     date: "2023-11-28",
-    medicine_morning: true,
+    medicine_morning: false,
     medicine_afternoon: false,
     medicine_night: false,
     condition: "元気で食欲あるが高熱あり",
@@ -52,9 +52,9 @@ const testHistories = [
     defecation: "便あり",
     eat: "食欲あり",
     date: "2023-11-28",
-    medicine_morning: true,
+    medicine_morning: false,
     medicine_afternoon: false,
-    medicine_night: false,
+    medicine_night: true,
     condition: "元気で食欲あるが高熱あり",
     username: "tanaka taro",
     user_firstName: "taro",
@@ -195,6 +195,12 @@ app.delete("/api/v1/histories/:id", (req, res) => {
   console.log("data_id : ", req.params.id);
 
   res.send("削除できました。");
+});
+app.put("/api/v1/histories/:id", (req, res) => {
+  console.log("req.body : ", req.body);
+  console.log("data_id : ", req.params.id);
+
+  res.send("UPDATEできました。");
 });
 
 app.listen(PORT, () => {
