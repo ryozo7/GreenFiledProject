@@ -2,7 +2,7 @@ import React from 'react'
 import {Outlet} from "react-router-dom"
 import "../../style/patient/patientTop.css"
 
-const PatientTop = () => {
+const Header = () => {
   return (
     <div>
       {/* <div className="wrap">
@@ -31,4 +31,4 @@ const PatientTop = () => {
   )
 }
 
-export default PatientTop
+export default Header
