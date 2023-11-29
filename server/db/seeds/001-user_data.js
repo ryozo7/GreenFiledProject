@@ -4,12 +4,49 @@
  */
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
+  await knex('children_data').del();
   await knex('user_data').del();
   await knex('user_data').insert([
-    { parent_id: 1, user_id: 1, password: 'abcdef', user_firstName: 'baba', user_lastName: 'taro', solt: 'aaa12', roll: false, image: 'rowValue1fafasgfdhsdfhsh' },
-    { parent_id: 1, user_id: 2, password: 'abcdef', user_firstName: 'baba', user_lastName: 'hanako', solt: 'bbb12', roll: false, image: 'rowValue1fafasgfdhsdfhsh' },
-    { parent_id: 2, user_id: 3, password: 'abcdef', user_firstName: 'matui', user_lastName: 'taro', solt: 'ccc12', roll: false, image: 'rowValue1fafasgfdhsdfhsh' },
-    { parent_id: 3, user_id: 4, password: 'abcdef', user_firstName: 'oga', user_lastName: 'taro', solt: 'ccc12', roll: true, image: 'rowValue1fafasgfdhsdfhsh' },
+    {
+      parent_id: 1,
+      user_id: 1,
+      password: 'abcdef',
+      user_firstName: 'taro',
+      user_lastName: 'baba',
+      solt: 'aaa12',
+      roll: false,
+      image: 'rowValue1fafasgfdhsdfhsh',
+    },
+    {
+      parent_id: 1,
+      user_id: 2,
+      password: 'abcdef',
+      user_firstName: 'hanako',
+      user_lastName: 'baba',
+      solt: 'bbb12',
+      roll: false,
+      image: 'rowValue1fafasgfdhsdfhsh',
+    },
+    {
+      parent_id: 2,
+      user_id: 3,
+      password: 'abcdef',
+      user_firstName: 'hanako',
+      user_lastName: 'matui',
+      solt: 'ccc12',
+      roll: false,
+      image: 'rowValue1fafasgfdhsdfhsh',
+    },
+    {
+      parent_id: 3,
+      user_id: 4,
+      password: 'abcdef',
+      user_firstName: 'taro',
+      user_lastName: 'oga',
+      solt: 'ccc12',
+      roll: true,
+      image: 'rowValue1fafasgfdhsdfhsh',
+    },
   ]);
 };
 
