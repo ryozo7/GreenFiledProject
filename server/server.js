@@ -46,8 +46,8 @@ const setupServer = () => {
     try {
       const getUsers = await knex
         .where({
-          user_firstName: userNamearray[0],
-          user_lastName: userNamearray[1],
+          user_firstName: userNamearray[1],
+          user_lastName: userNamearray[0],
         })
         .select(columnsArray)
         .from(USER_DATA_TABLE)
@@ -66,7 +66,7 @@ const setupServer = () => {
   app.get('/api/v1/historise', async (req, res) => {
     try {
       const getAll = await knex
-        .select()
+        .select(columnsArray)
         .from(USER_DATA_TABLE)
         .innerJoin(
           CHILDREN_DATA_TABLE,
@@ -114,7 +114,7 @@ const setupServer = () => {
   app.put('/api/v1/historise/:id', async (req, res) => {
     try {
       await knex(CHILDREN_DATA_TABLE)
-        .where({ user_id: req.params.id })
+        .where({ data_id: req.params.id })
         .update(req.body);
 
       await res.status(200).send('修正完了しました');
