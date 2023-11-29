@@ -8,27 +8,37 @@ import Header from "./component/common/Header"
 import History from "./component/common/History"
 import InputPatient from "./component/patient/InputPatient"
 import InputDoctor from "./component/doctor/InputDoctor"
+import { userInfo } from './test/user'
+import { historiesTest } from './test/histories'
+import { useState } from 'react'
 
 
 function App() {
+  const [username,setUsername] = useState(userInfo.username)
+  const [image,setImage] = useState(userInfo.image)
+  const [roll,setRoll] = useState(userInfo.roll)
+  const [histories,setHistories] = useState(historiesTest)
+  
+
+
 
 
   return (
     <>
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Top />} />
+      <Route path="/" element={<Top setHistories={setHistories} username={username} roll={roll}/>} />
       <Route path="/auth" element={<AuthTop />}>
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<SignUp />} />
       </Route>
       <Route path="/patient" element={<Header />}>
-        <Route path="/patient/histories" element={<History />} />
-        <Route path="/patient/newhistory" element={<InputPatient />} />
+        <Route path="/patient/histories" element={<History histories={histories} />} />
+        <Route path="/patient/newhistory" element={<InputPatient username={username}/>} />
         <Route path="/patient/modifyhistory" element={<InputPatient />} />
       </Route>
       <Route path="/doctor" element={<Header />}>
-        <Route path="/doctor/histories" element={<History />} />
+        <Route path="/doctor/histories" element={<History  histories={histories} />} />
         <Route path="/doctor/medicine" element={<InputDoctor />} />
       </Route>
     </Routes>

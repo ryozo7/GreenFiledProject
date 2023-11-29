@@ -1,9 +1,9 @@
 import React from 'react'
-import { histories } from '../../test/histories'
 import "../../style/common/common.css"
 import EditIcon from '@mui/icons-material/Edit';
 
-const History = () => {
+const History = (props) => {
+  const {histories} = props;
   const changeTime = (num) => {
     if(num === 0) return "朝"
     if(num === 1) return "昼"
@@ -64,14 +64,14 @@ const History = () => {
         {changedHistories.map((elem) => {
           return (
             <tr key={elem.data_id} className='common__histories--table'>
-          <td>{elem.date}</td>
-          <td>{elem.name}</td>
-          <td>{elem.temp}</td>
-          <td>{elem.defecation}</td>
-          <td>{elem.eat}</td>
-          <td>{elem.medicine}</td>
-          <td style={{textAlign: "left"}}>{elem.condition}</td>
-          <td><EditIcon /></td>
+              <td>{elem.date}</td>
+              <td>{elem.name}</td>
+              <td>{elem.temp}</td>
+              <td>{elem.defecation}</td>
+              <td>{elem.eat}</td>
+              <td>{elem.medicine}</td>
+              <td style={{textAlign: "left"}}>{elem.condition}</td>
+              <td><EditIcon /></td>
             </tr>
           )
         })}
